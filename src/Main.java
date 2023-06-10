@@ -37,6 +37,9 @@ public class Main {
         taskManager.getSubtaskById(4);
         taskManager.getSubtaskById(4);
 
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
+
         System.out.println("=====HISTORY=====");
         System.out.println(taskManager.getHistory());
 
@@ -59,6 +62,9 @@ public class Main {
         System.out.println("EPICS\n" + taskManager.getAllEpics());
         System.out.println("SUBTASKS\n" + taskManager.getAllSubtasks());
 
+        System.out.println("=====HISTORY REMOVE-1 (task+subtask)=====");
+        System.out.println(taskManager.getHistory());
+
         taskManager.removeSubtaskById(6);
 
         System.out.println("=====REMOVE-2 (subtask)=====");
@@ -66,11 +72,17 @@ public class Main {
         System.out.println("EPICS\n" + taskManager.getAllEpics());
         System.out.println("SUBTASKS\n" + taskManager.getAllSubtasks());
 
+        System.out.println("=====HISTORY REMOVE-2 (subtask)=====");
+        System.out.println(taskManager.getHistory());
+
         taskManager.clearAllEpics();
 
         System.out.println("=====CLEAR (epics)=====");
         System.out.println("TASKS\n" + taskManager.getAllTasks());
         System.out.println("EPICS\n" + taskManager.getAllEpics());
         System.out.println("SUBTASKS\n" + taskManager.getAllSubtasks());
+
+        System.out.println("=====HISTORY CLEAR (epics)=====");
+        System.out.println(taskManager.getHistory());
     }
 }

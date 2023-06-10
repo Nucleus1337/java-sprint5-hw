@@ -60,17 +60,22 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearAllTasks() {
+        taskIdToTask.values().forEach(task -> historyManager.remove(task.getId()));
         taskIdToTask.clear();
     }
 
     @Override
     public void clearAllEpics() {
+        epicIdToEpic.values().forEach(epic -> historyManager.remove(epic.getId()));
         epicIdToEpic.clear();
+
+        subtaskIdToSubtask.values().forEach(subtask -> historyManager.remove(subtask.getId()));
         subtaskIdToSubtask.clear();
     }
 
     @Override
     public void clearAllSubtasks() {
+        subtaskIdToSubtask.values().forEach(subtask -> historyManager.remove(subtask.getId()));
         subtaskIdToSubtask.clear();
 
         epicIdToEpic.values().forEach(epic -> {
@@ -110,6 +115,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTaskById(long taskId) {
         taskIdToTask.remove(taskId);
+        historyManager.remove(taskId);
     }
 
     @Override
@@ -118,14 +124,20 @@ public class InMemoryTaskManager implements TaskManager {
         epic.getSubtaskId().remove(subtaskId);
 
         subtaskIdToSubtask.remove(subtaskId);
+        historyManager.remove(subtaskId);
 
         calcEpicStatus(epic);
     }
 
     @Override
     public void removeEpicById(long epicId) {
-        epicIdToEpic.get(epicId).getSubtaskId().forEach(subtaskIdToSubtask::remove);
+        epicIdToEpic.get(epicId).getSubtaskId().forEach(subtaskId -> {
+            subtaskIdToSubtask.remove(subtaskId);
+            historyManager.remove(subtaskId);
+        });
+
         epicIdToEpic.remove(epicId);
+        historyManager.remove(epicId);
     }
 
     @Override
