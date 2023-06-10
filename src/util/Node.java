@@ -2,38 +2,38 @@ package util;
 
 import model.Task;
 
-public class Node<T> {
-    private T data;
-    private Node<T> next;
-    private Node<T> prev;
+public class Node {
+    private Task data;
+    private Node next;
+    private Node prev;
 
-    public Node(Node<T> prev, T data, Node<T> next) {
+    public Node(Node prev, Task data, Node next) {
         this.data = data;
         this.next = next;
         this.prev = prev;
     }
 
-    public T getData() {
+    public Task getData() {
         return data;
     }
 
-    public Node<T> getNext() {
+    public Node getNext() {
         return next;
     }
 
-    public Node<T> getPrev() {
+    public Node getPrev() {
         return prev;
     }
 
-    public void setData(T data) {
+    public void setData(Task data) {
         this.data = data;
     }
 
-    public void setNext(Node<T> next) {
+    public void setNext(Node next) {
         this.next = next;
     }
 
-    public void setPrev(Node<T> prev) {
+    public void setPrev(Node prev) {
         this.prev = prev;
     }
 }

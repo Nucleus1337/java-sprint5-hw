@@ -6,8 +6,8 @@ import util.Node;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final CustomLinkedList<Task> customHistory = new CustomLinkedList<>();
-    private final Map<Long, Node<Task>> taskIdToNode = new HashMap<>();
+    private final CustomLinkedList customHistory = new CustomLinkedList();
+    private final Map<Long, Node> taskIdToNode = new HashMap<>();
 
     @Override
     public void add(Task task) {
@@ -17,7 +17,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             customHistory.removeNode(taskIdToNode.get(taskId));
         }
 
-        Node<Task> node = customHistory.linkLast(task);
+        Node node = customHistory.linkLast(task);
         taskIdToNode.put(taskId, node);
     }
 
@@ -28,21 +28,21 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(long taskId) {
-        Node<Task> node = taskIdToNode.get(taskId);
+        Node node = taskIdToNode.get(taskId);
         customHistory.removeNode(node);
 
         taskIdToNode.remove(taskId);
     }
 
-    private static class CustomLinkedList<T> {
-        Node<T> head;
-        Node<T> tail;
+    private static class CustomLinkedList {
+        Node head;
+        Node tail;
 
         private int size = 0;
 
-        public Node<T> linkLast(T task) {
-            final Node<T> oldTail = tail;
-            final Node<T> newNode = new Node<T>(oldTail, task, null);
+        public Node linkLast(Task task) {
+            final Node oldTail = tail;
+            final Node newNode = new Node(oldTail, task, null);
 
             tail = newNode;
 
@@ -63,7 +63,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         public List<Task> getTasks() {
             List<Task> tasks = new ArrayList<>();
-            Node<T> node = head;
+            Node node = head;
 
             for (int i = 0; i < size; i++) {
                 tasks.add((Task) node.getData());
@@ -73,9 +73,9 @@ public class InMemoryHistoryManager implements HistoryManager {
             return tasks;
         }
 
-        public void removeNode(Node<T> node) {
-            Node<T> prevNode = node.getPrev();
-            Node<T> nextNode = node.getNext();
+        public void removeNode(Node node) {
+            Node prevNode = node.getPrev();
+            Node nextNode = node.getNext();
 
             if (prevNode != null) {
                 prevNode.setNext(nextNode);
